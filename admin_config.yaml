@@ -1,0 +1,26 @@
+```yaml
+backend:
+  name: git-gateway
+  branch: main
+publish_mode: editorial_workflow
+media_folder: "images"
+public_folder: "/images"
+collections:
+  - name: "events"
+    label: "Events"
+    folder: "events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Date", name: "date", widget: "date" }
+  - name: "gallery"
+    label: "Gallery"
+    folder: "gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Alt Text", name: "alt", widget: "string" }
+```
