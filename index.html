@@ -8,28 +8,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Base font for the body */
+    /* Base font for the body, using 'Inter' from Google Fonts */
     body {
       font-family: 'Inter', sans-serif;
     }
-    /* Hero section background with gradient and relative positioning for particles */
+    /* Hero section background with a linear gradient and relative positioning for particle animations */
     .hero-bg {
       background: linear-gradient(to right, #1e3a8a, #3b82f6);
       position: relative;
-      overflow: hidden;
+      overflow: hidden; /* Ensures particles don't spill out */
     }
     /* Styling for the animated particles in the hero section */
     .particle {
       position: absolute;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      animation: orbit 12s linear infinite;
+      background: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+      border-radius: 50%; /* Makes them circular */
+      animation: orbit 12s linear infinite; /* Applies the orbit animation */
     }
-    /* Specific sizes and animation durations for individual particles */
+    /* Specific sizes and animation durations for individual particles to vary movement */
     .particle:nth-child(1) { width: 8px; height: 8px; top: 15%; left: 10%; animation-duration: 10s; }
     .particle:nth-child(2) { width: 6px; height: 6px; top: 50%; left: 85%; animation-duration: 14s; }
     .particle:nth-child(3) { width: 10px; height: 10px; top: 70%; left: 30%; animation-duration: 12s; }
-    /* Keyframe animation for particle movement */
+    /* Keyframe animation for particle movement, creating an orbital effect */
     @keyframes orbit {
       0% { transform: translate(0, 0); }
       25% { transform: translate(15px, -15px); }
@@ -37,20 +37,20 @@
       75% { transform: translate(-15px, -15px); }
       100% { transform: translate(0, 0); }
     }
-    /* Modal overlay styling */
+    /* Modal overlay styling: Hidden by default, covers the entire screen */
     .modal {
-      display: none; /* Hidden by default */
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
-      z-index: 1000; /* Ensure it's on top */
+      z-index: 1000; /* Ensures it's on top of other content */
       align-items: center;
       justify-content: center;
     }
-    /* Modal content box styling */
+    /* Modal content box styling: White background, rounded corners, centered */
     .modal-content {
       background: white;
       padding: 2rem;
@@ -58,31 +58,31 @@
       max-width: 90%;
       width: 500px;
       text-align: center;
-      animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+      animation: fadeIn 0.5s ease-in-out; /* Fade-in animation for appearance */
       border: 3px solid #3b82f6; /* Blue border */
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
     }
-    /* Keyframe animation for modal fade-in */
+    /* Keyframe animation for modal fade-in effect */
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
-    /* Class to show the modal */
+    /* Class to display the modal when active */
     .modal.show {
       display: flex;
     }
-    /* Styling for form input fields */
+    /* Styling for form input fields, including border and transition effects */
     .input-field {
       border: 2px solid #3b82f6;
       border-radius: 8px;
       transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition on focus */
     }
-    /* Focus state for input fields */
+    /* Focus state for input fields, adding a blue glow */
     .input-field:focus {
       border-color: #1e3a8a;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Blue glow on focus */
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
     }
-    /* Styling for error messages in forms */
+    /* Styling for error messages in forms, hidden by default */
     .error {
       color: #dc2626; /* Red color for errors */
       font-size: 0.875rem; /* Small font size */
@@ -97,25 +97,25 @@
       border-radius: 8px 8px 0 0; /* Rounded top corners */
       transition: background 0.3s; /* Smooth background change */
     }
-    /* Active state for game tabs */
+    /* Active state for game tabs, with blue background and white text */
     .game-tab.active {
-      background: #3b82f6; /* Blue background for active tab */
+      background: #3b82f6;
       color: white;
     }
-    /* Base styling for p5.js canvas */
+    /* Base styling for p5.js canvas elements */
     canvas {
-      display: block; /* Remove extra space below canvas */
-      margin: 0 auto; /* Center the canvas */
-      max-width: 100%; /* Ensure it doesn't overflow its container */
+      display: block; /* Removes extra space below inline elements */
+      margin: 0 auto; /* Centers the canvas horizontally */
+      max-width: 100%; /* Ensures it doesn't overflow its container */
     }
     /* Responsive adjustments for canvas and game controls on small screens */
     @media (max-width: 640px) {
       canvas {
         width: 100%;
-        height: auto; /* Maintain aspect ratio */
+        height: auto; /* Maintains aspect ratio */
       }
       .game-controls {
-        max-width: 90%; /* Adjust max-width for smaller screens */
+        max-width: 90%; /* Adjusts max-width for better fit on small screens */
       }
     }
   </style>
@@ -181,7 +181,14 @@
             <label for="velocity" class="block text-gray-700 font-semibold mb-2">Velocity (m/s):</label>
             <input type="range" id="velocity" min="10" max="100" value="50" class="w-full">
             <p id="velocity-value" class="text-gray-700 text-center">50 m/s</p>
+            <label for="gravity" class="block text-gray-700 font-semibold mb-2 mt-4">Gravity (m/s²):</label>
+            <input type="range" id="gravity" min="1" max="20" step="0.1" value="9.81" class="w-full">
+            <p id="gravity-value" class="text-gray-700 text-center">9.81 m/s²</p>
+            <label for="drag" class="block text-gray-700 font-semibold mb-2 mt-4">Air Resistance:</label>
+            <input type="range" id="drag" min="0" max="0.1" step="0.001" value="0.01" class="w-full">
+            <p id="drag-value" class="text-gray-700 text-center">0.01</p>
             <button id="launch" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 mt-4 w-full">Launch</button>
+            <p id="score-display" class="text-gray-700 font-semibold mt-4 text-center">Score: <span id="score-value">0</span></p>
           </div>
           <div id="projectile-canvas"></div> </div>
         <div id="periodic-game" class="game-section hidden">
@@ -191,16 +198,22 @@
             <p id="quiz-question" class="text-gray-700 font-semibold mb-2 text-center"></p>
             <div id="quiz-options" class="grid grid-cols-2 gap-2"></div>
             <p id="quiz-feedback" class="text-center mt-2"></p>
+            <button id="explain-element-btn" class="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 mt-4 w-full">Explain Element ✨</button>
+            <button id="next-quiz-btn" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 mt-2 w-full">Next Question</button>
+            <div id="element-explanation" class="text-gray-800 mt-4 p-3 bg-white rounded-lg shadow-inner hidden">
+              <p class="text-center text-gray-500" id="explanation-loading-text">Loading explanation...</p>
+            </div>
           </div>
           <div id="periodic-canvas"></div> </div>
         <div id="orbit-game" class="game-section hidden">
           <h3 class="text-xl font-semibold text-blue-900 mb-2 text-center">Orbit Simulator</h3>
           <p class="text-gray-700 mb-4 text-center">Adjust mass to control the planet's orbit!</p>
           <div class="game-controls max-w-md mx-auto mb-4">
-            <label for="mass" class="block text-gray-700 font-semibold mb-2">Planet Mass (relative):</label>
-            <input type="range" id="mass" min="1" max="10" value="5" class="w-full">
-            <p id="mass-value" class="text-gray-700 text-center">5</p>
-            <button id="reset-orbit" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 mt-4 w-full">Reset Orbit</button>
+            <label for="star-mass" class="block text-gray-700 font-semibold mb-2">Star Mass (relative):</label>
+            <input type="range" id="star-mass" min="500" max="2000" value="1000" class="w-full">
+            <p id="star-mass-value" class="text-gray-700 text-center">1000</p>
+            <button id="add-planet-btn" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 mt-4 w-full">Add New Planet</button>
+            <button id="reset-orbit" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 mt-2 w-full">Reset Orbit</button>
           </div>
           <div id="orbit-canvas"></div> </div>
       </div>
@@ -228,6 +241,12 @@
           <p id="phone-error" class="error">Please enter a valid phone number (10-15 digits).</p>
         </div>
         <div class="mb-4">
+          <label for="student-id" class="block text-gray-700 font-semibold mb-2">Student ID</label>
+          <input type="text" id="student-id" name="studentId" class="input-field w-full px-4 py-2">
+          <p id="student-id-error" class="error">Please enter a valid Student ID.</p>
+        </div>
+
+        <div class="mb-4">
           <label for="dob" class="block text-gray-700 font-semibold mb-2">Date of Birth</label>
           <input type="date" id="dob" name="dob" class="input-field w-full px-4 py-2" required>
           <p id="dob-error" class="error">You must be at least 13 years old to join.</p>
@@ -238,11 +257,11 @@
         </div>
         <div class="mb-4">
           <label for="institution" class="block text-gray-700 font-semibold mb-2">Institution</label>
-          <input type="text" id="institution" name="institution" class="input-field w-full px-4 py-2" placeholder="e.g., Gazipur College">
+          <input type="text" id="institution" name="institution" class="input-field w-full px-4 py-2" placeholder="e.g., Gazipur Cantonment Public School and College">
         </div>
         <div class="mb-4">
-          <label for="department" class="block text-gray-700 font-semibold mb-2">Department/Major</label>
-          <input type="text" id="department" name="department" class="input-field w-full px-4 py-2" placeholder="e.g., Physics, Chemistry">
+          <label for="department" class="block text-gray-700 font-semibold mb-2">Department/Section</label>
+          <input type="text" id="department" name="department" class="input-field w-full px-4 py-2" placeholder="e.g., Science/Commerce/Arts, Proton/Electron/Neutron">
         </div>
         <div class="mb-4">
           <label for="membership-type" class="block text-gray-700 font-semibold mb-2">Membership Type</label>
@@ -351,7 +370,7 @@
 
   <footer class="bg-blue-900 text-white py-6">
     <div class="container mx-auto px-4 sm:px-6 text-center">
-      <p class="text-sm sm:text-base">Developed by NeuraSoft LTD | Technical Contact: Md Imtiaz Ahmed Nahid (<a href="mailto:neurasoftware@gmail.com" class="hover:underline">neurasoftware@gmail.com</a>)</p>
+      <p class="text-sm sm:text-base">Developed by NeuraSoft LTD | Technical Contact:  (<a href="mailto:neurasoftware@gmail.com" class="hover:underline">Md Imtiaz Ahmed Nahid</a>)</p>
       <p class="text-sm sm:text-base">© 2025 Gpcpsc Science Club. All rights reserved.</p>
     </div>
   </footer>
@@ -418,6 +437,22 @@
           modal.classList.remove('show');
         }
       });
+
+      // Attach event listeners for the new game controls
+      document.getElementById('explain-element-btn').addEventListener('click', getPeriodicElementInfo);
+      document.getElementById('next-quiz-btn').addEventListener('click', generateQuizQuestion);
+      document.getElementById('add-planet-btn').addEventListener('click', addPlanet);
+
+      // Update display for sliders on load
+      document.getElementById('gravity').addEventListener('input', function() {
+        document.getElementById('gravity-value').textContent = `${this.value} m/s²`;
+      });
+      document.getElementById('drag').addEventListener('input', function() {
+        document.getElementById('drag-value').textContent = this.value;
+      });
+      document.getElementById('star-mass').addEventListener('input', function() {
+        document.getElementById('star-mass-value').textContent = this.value;
+      });
     });
 
     // Membership form validation
@@ -455,6 +490,18 @@
         isValid = false;
       } else {
         phoneError.style.display = 'none';
+      }
+
+      // Validate Student ID (new field)
+      const studentId = document.getElementById('student-id').value;
+      const studentIdError = document.getElementById('student-id-error');
+      // Assuming Student ID can be alphanumeric, or adjust regex as needed
+      const studentIdRegex = /^[a-zA-Z0-9]{5,20}$/; // Example: 5-20 alphanumeric characters
+      if (studentId && !studentIdRegex.test(studentId)) {
+        studentIdError.style.display = 'block';
+        isValid = false;
+      } else {
+        studentIdError.style.display = 'none';
       }
 
       // Validate Date of Birth (must be at least 13 years old)
@@ -502,8 +549,15 @@
     let projectile = null; // Object to store projectile properties
     let angle = 45; // Initial angle for projectile
     let velocity = 50; // Initial velocity for projectile
+    let gravity = 9.81; // Default gravity for projectile motion
+    let dragCoefficient = 0.01; // Default air resistance for projectile motion
+    let targetX, targetY, targetRadius = 15; // Target for projectile game
+    let score = 0; // Score for projectile game
+
     let quiz = { element: '', symbol: '', options: [], correct: '' }; // Quiz state
-    let planet = { x: 0, y: 0, vx: 0, vy: 0, mass: 5 }; // Planet state for orbit simulator
+    let planets = []; // Array to hold multiple planets for orbit simulator
+    const G = 10; // Gravitational constant (simplified) for orbit simulator
+    let starMass = 1000; // Mass of the central star for orbit simulator
 
     // Array of elements for the Periodic Table Quiz
     const elements = [
@@ -580,7 +634,8 @@
         x: 50,
         y: height * 0.875 - 5,
         vx: velocity * cos(radians(angle)), // Calculate initial horizontal velocity
-        vy: -velocity * sin(radians(angle)) // Calculate initial vertical velocity (negative for upward movement)
+        vy: -velocity * sin(radians(angle)), // Calculate initial vertical velocity (negative for upward movement)
+        trail: [] // Initialize empty trail array for visual path
       };
     });
 
@@ -588,6 +643,10 @@
      * Generates a new question for the Periodic Table Quiz.
      */
     function generateQuizQuestion() {
+      // Hide and clear the explanation area when a new question is generated
+      document.getElementById('element-explanation').classList.add('hidden');
+      document.getElementById('explanation-loading-text').textContent = '';
+
       // Select a random element from the elements array
       quiz.element = elements[floor(random(elements.length))];
       quiz.correct = quiz.element.symbol; // Set the correct symbol for the current question
@@ -628,28 +687,91 @@
       if (selected === quiz.correct) {
         feedback.textContent = 'Correct! Great job!';
         feedback.style.color = '#22c55e'; // Green color for correct answer
-        setTimeout(generateQuizQuestion, 1000); // Generate a new question after a 1-second delay
+        // No auto-advance, user clicks "Next Question"
       } else {
         feedback.textContent = `Incorrect. The symbol for ${quiz.element.name} is ${quiz.correct}.`;
         feedback.style.color = '#dc2626'; // Red color for incorrect answer
       }
     }
 
-    // Event listeners for Orbit Simulator controls
-    document.getElementById('mass').addEventListener('input', function() {
-      planet.mass = parseFloat(this.value); // Update planet mass based on slider
-      document.getElementById('mass-value').textContent = this.value; // Update display
-    });
+    /**
+     * Calls the Gemini API to get an explanation or fact about the current periodic element.
+     */
+    async function getPeriodicElementInfo() {
+      const elementExplanationDiv = document.getElementById('element-explanation');
+      const explanationLoadingText = document.getElementById('explanation-loading-text');
+      const explainButton = document.getElementById('explain-element-btn');
 
-    document.getElementById('reset-orbit').addEventListener('click', function() {
-      // Reset planet to its initial position and velocity
-      planet = {
-        x: width / 2 + 100, // Initial X position (100 units right of center)
-        y: height / 2,      // Initial Y position (center)
-        vx: 0,              // Initial horizontal velocity
-        vy: -2,             // Initial vertical velocity (upward)
-        mass: parseFloat(document.getElementById('mass').value) // Use current mass from slider
+      elementExplanationDiv.classList.remove('hidden'); // Show the explanation area
+      explanationLoadingText.textContent = 'Loading explanation...'; // Set loading text
+      explainButton.disabled = true; // Disable button during loading
+
+      const prompt = `Provide a concise and interesting fact or explanation about the element ${quiz.element.name} (${quiz.element.symbol}). Keep it to 2-3 sentences.`;
+
+      try {
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+        const payload = { contents: chatHistory };
+        // The apiKey is automatically provided by the Canvas environment at runtime
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const text = result.candidates[0].content.parts[0].text;
+          explanationLoadingText.textContent = text; // Display the generated text
+        } else {
+          explanationLoadingText.textContent = 'Could not get explanation. Please try again.';
+          console.error('Gemini API response structure unexpected:', result);
+        }
+      } catch (error) {
+        explanationLoadingText.textContent = 'Error fetching explanation. Please try again.';
+        console.error('Error calling Gemini API:', error);
+      } finally {
+        explainButton.disabled = false; // Re-enable button regardless of success or failure
+      }
+    }
+
+    // Event listener for Orbit Simulator controls: Add New Planet
+    function addPlanet() {
+      // Calculate initial position within a reasonable range around the star
+      let r_initial = random(70, 150); // Initial distance from star
+      let theta_initial = random(TWO_PI); // Random angle
+
+      let initialX = width / 2 + r_initial * cos(theta_initial);
+      let initialY = height / 2 + r_initial * sin(theta_initial);
+
+      // Calculate tangential velocity for a roughly circular orbit
+      // v = sqrt(G * M / r)
+      let v_tangential = sqrt((G * starMass) / r_initial);
+
+      // Determine velocity components perpendicular to the radius vector
+      let vx_initial = -v_tangential * sin(theta_initial);
+      let vy_initial = v_tangential * cos(theta_initial);
+
+      let newPlanet = {
+        x: initialX,
+        y: initialY,
+        vx: vx_initial * random(0.8, 1.2), // Add some randomness to initial velocity
+        vy: vy_initial * random(0.8, 1.2),
+        mass: random(1, 10), // Random mass for the new planet
+        trail: [] // Initialize empty trail array
       };
+      planets.push(newPlanet);
+    }
+
+    // Event listener for Orbit Simulator controls: Reset Orbit
+    document.getElementById('reset-orbit').addEventListener('click', function() {
+      planets = []; // Clear all planets
+      addPlanet(); // Add one initial planet
     });
 
     // p5.js Setup function: Called once when the sketch starts or when `setup()` is explicitly called
@@ -663,13 +785,25 @@
       if (currentGame === 'projectile') {
         canvas.parent('projectile-canvas');
         projectile = null; // Reset projectile state
+        targetX = random(width * 0.7, width * 0.9); // Randomize target X
+        targetY = height * 0.85; // Target always on the ground
+        score = 0;
+        document.getElementById('score-value').textContent = score;
+        // Ensure sliders display initial values correctly
+        document.getElementById('gravity').value = gravity;
+        document.getElementById('drag').value = dragCoefficient;
+        document.getElementById('gravity-value').textContent = `${gravity} m/s²`;
+        document.getElementById('drag-value').textContent = dragCoefficient;
       } else if (currentGame === 'periodic') {
         canvas.parent('periodic-canvas');
         generateQuizQuestion(); // Generate the first quiz question
       } else if (currentGame === 'orbit') {
         canvas.parent('orbit-canvas');
-        // Initialize planet for orbit simulator relative to new canvas dimensions
-        planet = { x: width / 2 + 100, y: height / 2, vx: 0, vy: -2, mass: parseFloat(document.getElementById('mass').value) };
+        planets = []; // Clear planets on setup
+        addPlanet(); // Add one initial planet
+        // Ensure star mass slider displays initial value correctly
+        document.getElementById('star-mass').value = starMass;
+        document.getElementById('star-mass-value').textContent = starMass;
       }
     }
 
@@ -683,21 +817,63 @@
         rect(0, height * 0.875, width, height * 0.125); // Draw the ground at the bottom 1/8th of the canvas
 
         fill(255, 165, 0); // Orange color for the target
-        rect(width * 0.875, height * 0.85, width * 0.025, height * 0.025); // Draw a small target rectangle
+        // Draw target as a circle, centered at targetX, targetY
+        ellipse(targetX, targetY, targetRadius * 2, targetRadius * 2);
+
+        // Update gravity and drag values from sliders
+        gravity = parseFloat(document.getElementById('gravity').value);
+        dragCoefficient = parseFloat(document.getElementById('drag').value);
 
         // Draw and update projectile if it exists
         if (projectile) {
+          // Draw trail
+          for (let i = 0; i < projectile.trail.length; i++) {
+            let p = projectile.trail[i];
+            let alpha = map(i, 0, projectile.trail.length, 0, 255);
+            fill(255, 0, 0, alpha); // Red trail, fading out
+            ellipse(p.x, p.y, 5, 5); // Smaller ellipses for trail
+          }
           fill(255, 0, 0); // Red color for the projectile
           ellipse(projectile.x, projectile.y, 10, 10); // Draw the projectile as a circle
 
-          // Update projectile position using physics equations
-          projectile.x += projectile.vx * 0.1; // Update horizontal position
-          projectile.y += projectile.vy * 0.1; // Update vertical position
-          projectile.vy += 0.98; // Apply gravity (increase vertical velocity over time)
+          // Apply gravity
+          projectile.vy += gravity * 0.01; // Scale gravity effect for p5.js frame rate
 
-          // If projectile hits the ground, stop its movement
-          if (projectile.y > height * 0.875) {
-            projectile = null; // Reset projectile to stop drawing and updating
+          // Apply air resistance (simple model)
+          let speed = sqrt(projectile.vx * projectile.vx + projectile.vy * projectile.vy);
+          if (speed > 0.1) { // Avoid division by zero and tiny speeds
+              let dragForceX = -dragCoefficient * projectile.vx * speed;
+              let dragForceY = -dragCoefficient * projectile.vy * speed;
+              projectile.vx += dragForceX * 0.01; // Scale drag effect
+              projectile.vy += dragForceY * 0.01;
+          }
+
+          // Update projectile position
+          projectile.x += projectile.vx * 0.1;
+          projectile.y += projectile.vy * 0.1;
+
+          // Add current position to trail
+          projectile.trail.push({ x: projectile.x, y: projectile.y });
+          // Limit trail length
+          if (projectile.trail.length > 50) { // Keep last 50 points for trail
+            projectile.trail.shift();
+          }
+
+          // Collision with ground
+          if (projectile.y >= height * 0.875 - 5) { // Adjusted for projectile radius
+            projectile.y = height * 0.875 - 5;
+            projectile.vx = 0;
+            projectile.vy = 0;
+            // Check for target hit
+            let distanceToTarget = dist(projectile.x, projectile.y, targetX, targetY);
+            if (distanceToTarget < targetRadius + 5) { // Target radius + projectile radius
+              score += 1;
+              document.getElementById('score-value').textContent = score;
+              // Move target to new random location after hit
+              targetX = random(width * 0.7, width * 0.9);
+              targetY = height * 0.85; // Always on the ground
+            }
+            projectile = null; // Stop projectile
           }
         }
       } else if (currentGame === 'periodic') {
@@ -714,33 +890,47 @@
         fill(255, 255, 0); // Yellow color for the central star
         ellipse(width / 2, height / 2, 50, 50); // Draw the star at the center of the canvas
 
-        fill(0, 0, 255); // Blue color for the orbiting planet
-        ellipse(planet.x, planet.y, 15, 15); // Draw the planet
+        starMass = parseFloat(document.getElementById('star-mass').value); // Update star mass from slider
 
-        // Calculate and apply gravitational force for orbit simulation
-        const G = 10; // Gravitational constant (can be adjusted to change simulation speed/strength)
-        const starMass = 1000; // Mass of the central star (can be adjusted)
+        // Update and draw each planet
+        for (let i = 0; i < planets.length; i++) {
+          let p = planets[i];
 
-        // Calculate distance between star and planet
-        const dx = width / 2 - planet.x;
-        const dy = height / 2 - planet.y;
-        const r = sqrt(dx * dx + dy * dy); // Distance using Pythagorean theorem
+          // Draw trail
+          for (let j = 0; j < p.trail.length; j++) {
+            let trailPoint = p.trail[j];
+            let alpha = map(j, 0, p.trail.length, 0, 255);
+            fill(0, 0, 255, alpha); // Blue trail, fading out
+            ellipse(trailPoint.x, trailPoint.y, 3, 3); // Smaller ellipses for trail
+          }
 
-        // Prevent division by zero or extremely large forces if planet is too close to the star
-        if (r > 5) { // If distance is greater than a small threshold
-          const force = (G * starMass * planet.mass) / (r * r); // Calculate gravitational force
-          // Calculate acceleration components based on force and direction
-          const ax = (force * dx / r) / planet.mass;
-          const ay = (force * dy / r) / planet.mass;
+          fill(0, 0, 255); // Blue color for the orbiting planet
+          ellipse(p.x, p.y, 15, 15); // Draw the planet
 
-          // Update planet's velocity based on acceleration
-          planet.vx += ax * 0.1; // Scale acceleration for smoother movement
-          planet.vy += ay * 0.1;
+          // Calculate gravitational force
+          const dx = width / 2 - p.x;
+          const dy = height / 2 - p.y;
+          const r = sqrt(dx * dx + dy * dy);
+
+          if (r > 5) { // Avoid division by zero when planet is too close to the star
+            const force = (G * starMass * p.mass) / (r * r);
+            const ax = (force * dx / r) / p.mass;
+            const ay = (force * dy / r) / p.mass;
+
+            p.vx += ax * 0.1; // Scale acceleration for smoother movement
+            p.vy += ay * 0.1;
+          }
+
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Add current position to trail
+          p.trail.push({ x: p.x, y: p.y });
+          // Limit trail length
+          if (p.trail.length > 100) { // Keep last 100 points for trail
+            p.trail.shift();
+          }
         }
-
-        // Update planet's position based on its velocity
-        planet.x += planet.vx;
-        planet.y += planet.vy;
       }
     }
 
@@ -751,10 +941,18 @@
       let canvasHeight = Math.min(400, window.innerHeight * 0.6);
       resizeCanvas(canvasWidth, canvasHeight); // Resize the p5.js canvas
 
-      // If the orbit simulator is active, reset planet position relative to the new center
-      if (currentGame === 'orbit') {
-        planet = { x: width / 2 + 100, y: height / 2, vx: 0, vy: -2, mass: parseFloat(document.getElementById('mass').value) };
+      // Re-initialize game states based on the current game
+      if (currentGame === 'projectile') {
+        projectile = null; // Reset projectile
+        targetX = random(width * 0.7, width * 0.9);
+        targetY = height * 0.85;
+        score = 0;
+        document.getElementById('score-value').textContent = score;
+      } else if (currentGame === 'orbit') {
+        planets = []; // Clear existing planets
+        addPlanet(); // Add one new planet with new dimensions
       }
+      // Periodic quiz doesn't need specific canvas re-initialization beyond what setup() does
     }
   </script>
 </body>
