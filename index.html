@@ -189,6 +189,10 @@
             <p id="drag-value" class="text-gray-700 text-center">0.01</p>
             <button id="launch" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 mt-4 w-full">Launch</button>
             <p id="score-display" class="text-gray-700 font-semibold mt-4 text-center">Score: <span id="score-value">0</span></p>
+            <button id="projectile-fact-btn" class="bg-yellow-600 text-white px-6 py-2 rounded-full hover:bg-yellow-700 mt-4 w-full">Science Fact ✨</button>
+            <div id="projectile-fact-explanation" class="text-gray-800 mt-4 p-3 bg-white rounded-lg shadow-inner hidden">
+                <p class="text-center text-gray-500" id="projectile-fact-loading-text">Loading science fact...</p>
+            </div>
           </div>
           <div id="projectile-canvas"></div> </div>
         <div id="periodic-game" class="game-section hidden">
@@ -214,6 +218,10 @@
             <p id="star-mass-value" class="text-gray-700 text-center">1000</p>
             <button id="add-planet-btn" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 mt-4 w-full">Add New Planet</button>
             <button id="reset-orbit" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 mt-2 w-full">Reset Orbit</button>
+            <button id="orbit-fact-btn" class="bg-teal-600 text-white px-6 py-2 rounded-full hover:bg-teal-700 mt-4 w-full">Orbital Fact ✨</button>
+            <div id="orbit-fact-explanation" class="text-gray-800 mt-4 p-3 bg-white rounded-lg shadow-inner hidden">
+                <p class="text-center text-gray-500" id="orbit-fact-loading-text">Loading orbital fact...</p>
+            </div>
           </div>
           <div id="orbit-canvas"></div> </div>
       </div>
@@ -370,7 +378,7 @@
 
   <footer class="bg-blue-900 text-white py-6">
     <div class="container mx-auto px-4 sm:px-6 text-center">
-      <p class="text-sm sm:text-base">Developed by NeuraSoft LTD | Technical Contact:  (<a href="mailto:neurasoftware@gmail.com" class="hover:underline">Md Imtiaz Ahmed Nahid</a>)</p>
+      <p class="text-sm sm:text-base">Developed by NeuraSoft LTD | Technical Contact: Md Imtiaz Ahmed Nahid (<a href="mailto:neurasoftware@gmail.com" class="hover:underline">neurasoftware@gmail.com</a>)</p>
       <p class="text-sm sm:text-base">© 2025 Gpcpsc Science Club. All rights reserved.</p>
     </div>
   </footer>
@@ -442,6 +450,8 @@
       document.getElementById('explain-element-btn').addEventListener('click', getPeriodicElementInfo);
       document.getElementById('next-quiz-btn').addEventListener('click', generateQuizQuestion);
       document.getElementById('add-planet-btn').addEventListener('click', addPlanet);
+      document.getElementById('projectile-fact-btn').addEventListener('click', getProjectileFact);
+      document.getElementById('orbit-fact-btn').addEventListener('click', getOrbitFact); // New event listener for Orbit Simulator
 
       // Update display for sliders on load
       document.getElementById('gravity').addEventListener('input', function() {
@@ -740,6 +750,97 @@
       }
     }
 
+    /**
+     * Calls the Gemini API to get a science fact related to projectile motion.
+     */
+    async function getProjectileFact() {
+      const factExplanationDiv = document.getElementById('projectile-fact-explanation');
+      const factLoadingText = document.getElementById('projectile-fact-loading-text');
+      const factButton = document.getElementById('projectile-fact-btn');
+
+      factExplanationDiv.classList.remove('hidden'); // Show the explanation area
+      factLoadingText.textContent = 'Loading science fact...'; // Set loading text
+      factButton.disabled = true; // Disable button during loading
+
+      const prompt = `Provide a concise and interesting scientific fact or principle related to projectile motion, air resistance, or gravity. Keep it to 2-3 sentences.`;
+
+      try {
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+        const payload = { contents: chatHistory };
+        const apiKey = ""; // Canvas will provide this API key at runtime
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const text = result.candidates[0].content.parts[0].text;
+          factLoadingText.textContent = text; // Display the generated text
+        } else {
+          factLoadingText.textContent = 'Could not get science fact. Please try again.';
+          console.error('Gemini API response structure unexpected:', result);
+        }
+      } catch (error) {
+        factLoadingText.textContent = 'Error fetching science fact. Please try again.';
+        console.error('Error calling Gemini API:', error);
+      } finally {
+        factButton.disabled = false; // Re-enable button regardless of success or failure
+      }
+    }
+
+    /**
+     * Calls the Gemini API to get a science fact related to orbital mechanics.
+     */
+    async function getOrbitFact() {
+      const factExplanationDiv = document.getElementById('orbit-fact-explanation');
+      const factLoadingText = document.getElementById('orbit-fact-loading-text');
+      const factButton = document.getElementById('orbit-fact-btn');
+
+      factExplanationDiv.classList.remove('hidden'); // Show the explanation area
+      factLoadingText.textContent = 'Loading orbital fact...'; // Set loading text
+      factButton.disabled = true; // Disable button during loading
+
+      const prompt = `Provide a concise and interesting scientific fact or principle related to orbital mechanics, gravity, or celestial bodies. Keep it to 2-3 sentences.`;
+
+      try {
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+        const payload = { contents: chatHistory };
+        const apiKey = ""; // Canvas will provide this API key at runtime
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const text = result.candidates[0].content.parts[0].text;
+          factLoadingText.textContent = text; // Display the generated text
+        } else {
+          factLoadingText.textContent = 'Could not get orbital fact. Please try again.';
+          console.error('Gemini API response structure unexpected:', result);
+        }
+      } catch (error) {
+        factLoadingText.textContent = 'Error fetching orbital fact. Please try again.';
+        console.error('Error calling Gemini API:', error);
+      } finally {
+        factButton.disabled = false; // Re-enable button regardless of success or failure
+      }
+    }
+
+
     // Event listener for Orbit Simulator controls: Add New Planet
     function addPlanet() {
       // Calculate initial position within a reasonable range around the star
@@ -794,9 +895,15 @@
         document.getElementById('drag').value = dragCoefficient;
         document.getElementById('gravity-value').textContent = `${gravity} m/s²`;
         document.getElementById('drag-value').textContent = dragCoefficient;
+        // Hide projectile fact explanation on game switch
+        document.getElementById('projectile-fact-explanation').classList.add('hidden');
+        document.getElementById('projectile-fact-loading-text').textContent = '';
       } else if (currentGame === 'periodic') {
         canvas.parent('periodic-canvas');
         generateQuizQuestion(); // Generate the first quiz question
+        // Hide element explanation on game switch
+        document.getElementById('element-explanation').classList.add('hidden');
+        document.getElementById('explanation-loading-text').textContent = '';
       } else if (currentGame === 'orbit') {
         canvas.parent('orbit-canvas');
         planets = []; // Clear planets on setup
@@ -804,6 +911,9 @@
         // Ensure star mass slider displays initial value correctly
         document.getElementById('star-mass').value = starMass;
         document.getElementById('star-mass-value').textContent = starMass;
+        // Hide orbit fact explanation on game switch
+        document.getElementById('orbit-fact-explanation').classList.add('hidden');
+        document.getElementById('orbit-fact-loading-text').textContent = '';
       }
     }
 
