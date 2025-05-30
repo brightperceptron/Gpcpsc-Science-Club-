@@ -734,7 +734,7 @@ Join students, educators, and enthusiasts to explore the wonders of science and 
         chatHistory.push({ role: "user", parts: [{ text: prompt }] });
         const payload = { contents: chatHistory };
         // The apiKey is automatically provided by the Canvas environment at runtime
-        const apiKey = ""; // Keep this empty, Canvas provides it
+        const apiKey = "AIzaSyCQrRkxMemGJdzvA1YPxol7jT4vSiWDWxc"; // Keep this empty, Canvas provides it
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
