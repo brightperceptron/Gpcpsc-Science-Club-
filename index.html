@@ -194,7 +194,8 @@
                 <p class="text-center text-gray-500" id="projectile-fact-loading-text">Loading science fact...</p>
             </div>
           </div>
-          <div id="projectile-canvas"></div> </div>
+          <div id="projectile-canvas"></div>
+        </div>
         <div id="periodic-game" class="game-section hidden">
           <h3 class="text-xl font-semibold text-blue-900 mb-2 text-center">Periodic Table Quiz</h3>
           <p class="text-gray-700 mb-4 text-center">Match the element to its symbol!</p>
@@ -208,7 +209,8 @@
               <p class="text-center text-gray-500" id="explanation-loading-text">Loading explanation...</p>
             </div>
           </div>
-          <div id="periodic-canvas"></div> </div>
+          <div id="periodic-canvas"></div>
+        </div>
         <div id="orbit-game" class="game-section hidden">
           <h3 class="text-xl font-semibold text-blue-900 mb-2 text-center">Orbit Simulator</h3>
           <p class="text-gray-700 mb-4 text-center">Adjust mass to control the planet's orbit!</p>
@@ -223,7 +225,8 @@
                 <p class="text-center text-gray-500" id="orbit-fact-loading-text">Loading orbital fact...</p>
             </div>
           </div>
-          <div id="orbit-canvas"></div> </div>
+          <div id="orbit-canvas"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -342,9 +345,9 @@
     <div class="container mx-auto px-4 sm:px-6">
       <h2 class="text-2xl sm:text-3xl font-bold text-blue-900 mb-6 text-center">Gallery</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <div class="bg-gray-200 h-40 sm:h-48 rounded-lg"> <img src="i_1.jgp></div>
-        <div class="bg-gray-200 h-40 sm:h-48 rounded-lg"><img src="i_2.jgp></div>
-        <div class="bg-gray-200 h-40 sm:h-48 rounded-lg"><img src="i_3.jgp></div>
+        <div class="bg-gray-200 h-40 sm:h-48 rounded-lg"><img src="i_1.jpg" alt="Science Club Activity 1" class="w-full h-full object-cover rounded-lg"></div>
+        <div class="bg-gray-200 h-40 sm:h-48 rounded-lg"><img src="i_2.jpg" alt="Science Club Activity 2" class="w-full h-full object-cover rounded-lg"></div>
+        <div class="bg-gray-200 h-40 sm:h-48 rounded-lg"><img src="i_3.jpg" alt="Science Club Activity 3" class="w-full h-full object-cover rounded-lg"></div>
       </div>
       <p class="text-center text-gray-700 mt-4 text-sm sm:text-base">Check back for photos from our latest events!</p>
     </div>
@@ -368,10 +371,10 @@
     <div class="container mx-auto px-4 sm:px-6">
       <h2 class="text-2xl sm:text-3xl font-bold text-blue-900 mb-6 text-center">Contact Us</h2>
       <p class="text-base sm:text-lg text-gray-700 mb-4 text-center">
-        Reach out at <a href="https://www.facebook.com/share/1JPDZWPSZj/" class="text-blue-600 hover:underline">science.club.gpcpsc@gmail.com</a>
+        Reach out at <a href="mailto:science.club.gpcpsc@gmail.com" class="text-blue-600 hover:underline">science.club.gpcpsc@gmail.com</a>
       </p>
       <div class="w-full h-48 sm:h-64 bg-gray-200 rounded-lg overflow-hidden">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.831304153281!2d90.39845231526176!3d24.00629518446316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c5b7d0000001%3A0x7c9b5b7b5b5b5b5b!2sBangladesh%20Ordnance%20Factories%20(BOF)!5e0!3m2!1sen!2sbd!4v1698765432109" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3646.6800767751954!2d90.37050077595562!3d23.94828138243609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c3c0b0b0b0b1%3A0x123456789abcdef!2sGazipur%20Cantonment%20Public%20School%20and%20College!5e0!3m2!1sen!2sbd!4v1717013919927!5m2!1sen!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </div>
   </section>
@@ -402,6 +405,7 @@
       const closeModal = document.getElementById('close-modal');
 
       // Define the event date and time in Dhaka (GMT+6)
+      // Corrected the date for Stargazing Night to June 20, 2025
       const eventDate = new Date('2025-06-20T19:00:00+06:00'); // Stargazing Night: June 20, 2025, 7:00 PM Dhaka time
       const now = new Date(); // Current time
 
@@ -410,8 +414,8 @@
       let modalTextContent = '';
 
       // Check if current time is within 24 hours before or after the 'Stargazing Night' event
-      const TwentyFourHoursMs = 24 * 60 * 60 * 1000;
-      if (now.getTime() >= (eventDate.getTime() - TwentyFourHoursMs) && now.getTime() <= (eventDate.getTime() + TwentyFourHoursMs)) {
+      const twentyFourHoursMs = 24 * 60 * 60 * 1000;
+      if (now.getTime() >= (eventDate.getTime() - twentyFourHoursMs) && now.getTime() <= (eventDate.getTime() + twentyFourHoursMs)) {
         showModal = true;
         modalTitleContent = 'Special Event Alert: Stargazing Night Tonight!';
         modalTextContent = 'Join us for an unforgettable Stargazing Night! Discover the cosmos with telescopes. Event starts at 7:00 PM at Gazipur College grounds. Don\'t miss out!';
@@ -463,6 +467,9 @@
       document.getElementById('star-mass').addEventListener('input', function() {
         document.getElementById('star-mass-value').textContent = this.value;
       });
+
+      // Initialize the first game canvas
+      setup();
     });
 
     // Membership form validation
@@ -611,7 +618,6 @@
       currentGame = game; // Update current game state
 
       // Re-initialize p5.js canvas for the new game
-      // This is crucial to ensure p5.js functions correctly within the new parent div
       removeCanvas(); // Remove existing canvas if any
       setup(); // Call setup to create new canvas and initialize game
     }
@@ -723,7 +729,7 @@
         chatHistory.push({ role: "user", parts: [{ text: prompt }] });
         const payload = { contents: chatHistory };
         // The apiKey is automatically provided by the Canvas environment at runtime
-        const apiKey = "";
+        const apiKey = ""; // Keep this empty, Canvas provides it
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
@@ -924,10 +930,10 @@
       if (currentGame === 'projectile') {
         // Projectile Motion Game rendering
         fill(100, 200, 100); // Green color for the ground
+        noStroke(); // Remove stroke for the ground
         rect(0, height * 0.875, width, height * 0.125); // Draw the ground at the bottom 1/8th of the canvas
 
         fill(255, 165, 0); // Orange color for the target
-        // Draw target as a circle, centered at targetX, targetY
         ellipse(targetX, targetY, targetRadius * 2, targetRadius * 2);
 
         // Update gravity and drag values from sliders
@@ -941,9 +947,11 @@
             let p = projectile.trail[i];
             let alpha = map(i, 0, projectile.trail.length, 0, 255);
             fill(255, 0, 0, alpha); // Red trail, fading out
+            noStroke();
             ellipse(p.x, p.y, 5, 5); // Smaller ellipses for trail
           }
           fill(255, 0, 0); // Red color for the projectile
+          noStroke();
           ellipse(projectile.x, projectile.y, 10, 10); // Draw the projectile as a circle
 
           // Apply gravity
@@ -989,6 +997,7 @@
       } else if (currentGame === 'periodic') {
         // Periodic Table Quiz Game rendering (visuals are minimal as interaction is via HTML)
         fill(200); // Light gray background for the quiz area
+        noStroke();
         rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8); // Draw a large rectangle for the quiz area
 
         textAlign(CENTER, CENTER); // Center align text
@@ -998,6 +1007,7 @@
       } else if (currentGame === 'orbit') {
         // Orbit Simulator Game rendering
         fill(255, 255, 0); // Yellow color for the central star
+        noStroke();
         ellipse(width / 2, height / 2, 50, 50); // Draw the star at the center of the canvas
 
         starMass = parseFloat(document.getElementById('star-mass').value); // Update star mass from slider
@@ -1011,10 +1021,12 @@
             let trailPoint = p.trail[j];
             let alpha = map(j, 0, p.trail.length, 0, 255);
             fill(0, 0, 255, alpha); // Blue trail, fading out
+            noStroke();
             ellipse(trailPoint.x, trailPoint.y, 3, 3); // Smaller ellipses for trail
           }
 
           fill(0, 0, 255); // Blue color for the orbiting planet
+          noStroke();
           ellipse(p.x, p.y, 15, 15); // Draw the planet
 
           // Calculate gravitational force
